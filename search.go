@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/elastic/go-elasticsearch/v8"
 	"time"
 
 	"github.com/elastic/go-elasticsearch/v8/esapi"
