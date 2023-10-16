@@ -218,10 +218,11 @@ type RegexpQuery struct {
 }
 
 type regexpQueryParams struct {
-	Value                 string `structs:"value"`
-	Flags                 string `structs:"flags,omitempty"`
-	MaxDeterminizedStates uint16 `structs:"max_determinized_states,omitempty"`
-	Rewrite               string `structs:"rewrite,omitempty"`
+	Value                 string  `structs:"value"`
+	Flags                 string  `structs:"flags,omitempty"`
+	MaxDeterminizedStates uint16  `structs:"max_determinized_states,omitempty"`
+	Rewrite               string  `structs:"rewrite,omitempty"`
+	Boost                 float32 `structs:"boost,omitempty"`
 }
 
 // Regexp creates a new query of type "regexp" on the provided field and using
@@ -261,6 +262,12 @@ func (q *RegexpQuery) MaxDeterminizedStates(m uint16) *RegexpQuery {
 // Rewrite sets the method used to rewrite the query.
 func (q *RegexpQuery) Rewrite(r string) *RegexpQuery {
 	q.params.Rewrite = r
+	return q
+}
+
+// Boost sets the boost value of the query.
+func (q *RegexpQuery) Boost(b float32) *RegexpQuery {
+	q.params.Boost = b
 	return q
 }
 
