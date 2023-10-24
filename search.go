@@ -26,6 +26,7 @@ type SearchRequest struct {
 	sort        Sort
 	source      Source
 	timeout     *time.Duration
+	minScore    float32
 }
 
 // Search creates a new SearchRequest object, to be filled via method chaining.
@@ -36,6 +37,12 @@ func Search() *SearchRequest {
 // Query sets a query for the request.
 func (req *SearchRequest) Query(q Mappable) *SearchRequest {
 	req.query = q
+	return req
+}
+
+// MinScore sets a min score for the request.
+func (req *SearchRequest) MinScore(score float32) *SearchRequest {
+	req.minScore = score
 	return req
 }
 
@@ -118,6 +125,9 @@ func (req *SearchRequest) Map() map[string]interface{} {
 	m := make(map[string]interface{})
 	if req.query != nil {
 		m["query"] = req.query.Map()
+	}
+	if req.minScore > 0 {
+		m["min_score"] = req.minScore
 	}
 	if len(req.aggs) > 0 {
 		aggs := make(map[string]interface{})
