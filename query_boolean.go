@@ -1,6 +1,11 @@
 package esquery
 
-import "github.com/fatih/structs"
+import (
+	"bytes"
+	"encoding/json"
+	"github.com/fatih/structs"
+	"io"
+)
 
 // BoolQuery represents a compound query of type "bool", as described in
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
@@ -105,4 +110,11 @@ func (q *BoolQuery) Map() map[string]interface{} {
 	return map[string]interface{}{
 		"bool": structs.Map(data),
 	}
+}
+
+func (q *BoolQuery) Reader() io.Reader {
+	results := make(map[string]any)
+	results["query"] = q.Map()
+	b, _ := json.Marshal(results)
+	return bytes.NewReader(b)
 }
