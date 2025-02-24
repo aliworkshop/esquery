@@ -1,6 +1,6 @@
 module github.com/aliworkshop/esquery
 
-go 1.13
+go 1.18
 
 require (
 	github.com/elastic/go-elasticsearch/v8 v8.3.0
